@@ -1,36 +1,49 @@
 #include <iostream>
-#include <vector>
-#include <string>
-#include <stack>
 using namespace std;
-// reverse and array and a string
-// use stack and vector
-void reverseArr(vector<int>& arr) {
-    stack<int> s;
-    for (int num : arr) { s.push(num); }
-    for (size_t i = 0; i < arr.size(); ++i) {
-        arr[i] = s.top();
-        s.pop();
+// Implementation of Queue:
+// Use integer array for Queue and show enqueue (), dequeue (), 
+// isEmpty(), getRear(), and getFront() functions.
+// Submission:
+// i) Code
+// ii) Output for each of the operations (enqueue, dequeue etc)
+class Queue {
+private:
+    int front, rear, capacity;
+    int* queue;
+public:
+    Queue(int size = 1000) {
+        capacity = size;
+        front = 0;
+        rear = -1;
+        queue = new int[capacity];
     }
-}
-void reverseStr(string& str) {
-    stack<char> s;
-    for (char ch : str) { s.push(ch); }
-    for (size_t i = 0; i < str.length(); ++i) {
-        str[i] = s.top();
-        s.pop();
+    ~Queue() { delete[] queue; }
+    void enqueue(int x) {
+        if (rear == capacity - 1) { cout << "Queue Overflow" << endl; return; }
+        queue[++rear] = x;
     }
-}
+    int dequeue() {
+        if (isEmpty()) { cout << "Queue Underflow" << endl; return -1; }
+        return queue[front++];
+    }
+    int getFront() {
+        if (isEmpty()) { cout << "Queue is empty" << endl; return -1; }
+        return queue[front];
+    }
+    int getRear() {
+        if (isEmpty()) { cout << "Queue is empty" << endl; return -1; }
+        return queue[rear];
+    }
+    bool isEmpty() { return front > rear; }
+};
 int main() {
-    vector<int> v = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    cout << "Original array: ";
-    for (int i : v) { cout << i << " "; }
-    reverseArr(v);
-    cout << "\nReversed array: ";
-    for (int i : v) { cout << i << " "; }
-    string str = "Hello, World!";
-    cout << "\nOriginal string: " << str;
-    reverseStr(str);
-    cout << "\nReversed string: " << str << endl;
+    Queue q;
+    q.enqueue(10);
+    q.enqueue(20);
+    q.enqueue(30);
+    cout << q.dequeue() << " dequeued from queue" << endl;
+    cout << "Front element is: " << q.getFront() << endl;
+    cout << "Rear element is: " << q.getRear() << endl;
+    cout << "Is queue empty? " << (q.isEmpty() ? "Yes" : "No") << endl;
     return 0;
 }
