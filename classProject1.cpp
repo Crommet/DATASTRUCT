@@ -17,6 +17,9 @@ using namespace std;
 // Postfix: 42 3 + | Postfix: 3 3 * 1 + 2  6 + *     | Postfix:  3 3 * 1 + 2  6 + +  | Postfix:  3 2 + 2 6 4 + *+        | Postfix: 3 72 +
 // Evaluates to 45 | Evaluates to 80                 | Evaluates to 18               | Evaluates to 25                   | Evaluates to 75
 // -------------------------------------------------------------------------------------------------------------------------------------------------
+// NEW CONSTRUCTION:
+// New contruction for multiple digit support will require a space or line feed to terminate the number.
+// You still cannot assume that the user will be competent.
 string addSpaces(string str) { // Function to add spaces between characters in a string for infix output readability
     string result;
     for (char ch : str) {
@@ -65,23 +68,27 @@ string inFixToPostFixInDepth(string infix){
 }
 // Function to evaluate postfix expression but adding steps for better understanding of the background process
 int evaluatePostfixInDepth(string exp){
-    cout << "not implemented yet" << endl;
     stack<int> s;
     for (char ch : exp) {
         if (isdigit(ch)) {
+            cout << "Push " << ch - '0' << " onto stack" << endl;
             s.push(ch - '0'); // Convert char to int and push onto stack
         } else if (ch == '+' || ch == '*') {
+            cout << "Current operator: " << ch << endl;
             if (s.size() < 2) {
                 cout << "Invalid expression" << endl;
                 return -1; // Not enough operands
             }
-            int val2 = s.top(); s.pop();
-            int val1 = s.top(); s.pop();
+            cout << "Pop two values from stack: " << endl;
+            int val2 = s.top(); cout << "val2:" << s.top() << endl; s.pop();
+            int val1 = s.top(); cout << "val1:" << s.top() << endl; s.pop();
             int result;
             if (ch == '+') {
                 result = val1 + val2;
+                cout << "Calculate " << val1 << " + " << val2 << " = " << result << endl;
             } else if (ch == '*'){
                 result = val1 * val2;
+                cout << "Calculate " << val1 << " * " << val2 << " = " << result << endl;
             } 
             s.push(result);
         }
