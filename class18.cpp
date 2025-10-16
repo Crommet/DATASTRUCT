@@ -88,7 +88,10 @@ void resetComparisons() {
     comparisons = 0;
 }
 int main() {
-    const int ARRAY_SIZE = 100; // You can change this value for different sizes
+    const int ARRAY_SIZE;
+    //ask for array size
+    cout << "Enter array size (e.g., 1000, 10000, 100000): ";
+    cin >> ARRAY_SIZE;
     int arr1[ARRAY_SIZE];
     
     createRandomArray(arr1, ARRAY_SIZE);
